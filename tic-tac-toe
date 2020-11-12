@@ -1,1 +1,496 @@
+import time
+import random
+import os
 
+def clear():
+  if os.name=="nt":    
+    c=os.system("cls")
+  else:
+    c=os.system("clear")
+  del c
+
+def wait(x):
+  time.sleep(x)
+
+LT=" "
+LC=" "
+LB=" "
+MT=" "
+MC=" "
+MB=" "
+RT=" "
+RC=" "
+RB=" "
+p=0
+d=0
+passed=0
+playercount=''
+boardstate=[LT,MT,RT,LC,MC,RC,LB,MB,RB]
+finished=0
+playerturn=1
+choiceLB=["b","B","1"]
+choiceMB=["n","N","2"]
+choiceRB=["m","M","3"]
+choiceLC=["g","G","4"]
+choiceMC=["h","H","5"]
+choiceRC=["j","J","6"]
+choiceLT=["t","T","7"]
+choiceMT=["y","Y","8"]
+choiceRT=["u","U","9"]
+open_spots=''
+open_corners=''
+open_sides=''
+winning_spots=''
+deny_spots=''
+open_winning_spots=''
+open_deny_spots=''
+
+def print_playercount():
+  print("Press 1 to play against a computer")
+  print("Press 2 to play with a friend")
+  print()
+  print()
+  print()
+
+def print_board():
+  print("┏━━━┳━━━┳━━━┓")
+  print("┃",LT,"┃",MT,"┃",RT,"┃")
+  print("┣━━━╋━━━╋━━━┫")
+  print("┃",LC,"┃",MC,"┃",RC,"┃")
+  print("┣━━━╋━━━╋━━━┫")
+  print("┃",LB,"┃",MB,"┃",RB,"┃")
+  print("┗━━━┻━━━┻━━━┛")
+
+def choose_playercount():
+  global p
+  global passed
+  global playercount
+  while True:
+    try:
+      p=eval(input())
+      passed=1
+      if p==1:
+        playercount=("Playing against a computer")
+      elif p==2:
+        playercount=("Playing with a friend")
+      else:
+        passed=0
+      break
+    except:
+      passed=0
+      break
+
+def print_help():
+  print("Use these keys to choose your square")
+  print("t y u    7 8 9")
+  print("g h j or 4 5 6")
+  print("b n m    1 2 3")
+
+def print_bot_difficulty():
+  print("Choose the difficulty of the computer")
+  print("1 for Easy")
+  print("2 for Medium")
+  print("3 for Hard")
+  print()
+
+def bot_difficulty():
+  global d
+  global passed
+  global playercount
+  while True:
+    try:
+      d=eval(input())
+      passed=1
+      if d!=1 and d!=2 and d!=3 and d!=4:
+        passed=0
+      if d==4:
+        playercount=("Warning! Impossible difficulty. You will not win.")
+      break
+    except:
+      passed=0
+      break
+
+def player1_turn():
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global RT
+  global choiceLB
+  global choiceLC
+  global choiceLT
+  global choiceMB
+  global choiceMC
+  global choiceMT
+  global choiceRB
+  global choiceRC
+  global choiceRT
+  global playerchoice
+  global playerturn
+  if playerchoice in choiceLB:
+    if LB==" ":
+      LB="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceLC:
+    if LC==" ":
+      LC="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceLT:
+    if LT==" ":
+      LT="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceMB:
+    if MB==" ":
+      MB="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceMC:
+    if MC==" ":
+      MC="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceMT:
+    if MT==" ":
+      MT="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceRB:
+    if RB==" ":
+      RB="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceRC:
+    if RC==" ":
+      RC="X"
+      playerturn=2
+    else:
+      playerturn=1
+  elif playerchoice in choiceRT:
+    if RT==" ":
+      RT="X"
+      playerturn=2
+    else:
+      playerturn=1
+
+def player2_turn():
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global RT
+  global choiceLB
+  global choiceLC
+  global choiceLT
+  global choiceMB
+  global choiceMC
+  global choiceMT
+  global choiceRB
+  global choiceRC
+  global choiceRT
+  global playerchoice
+  global playerturn
+  if playerchoice in choiceLB:
+    if LB==" ":
+      LB="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceLC:
+    if LC==" ":
+      LC="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceLT:
+    if LT==" ":
+      LT="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceMB:
+    if MB==" ":
+      MB="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceMC:
+    if MC==" ":
+      MC="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceMT:
+    if MT==" ":
+      MT="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceRB:
+    if RB==" ":
+      RB="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceRC:
+    if RC==" ":
+      RC="O"
+      playerturn=1
+    else:
+      playerturn=2
+  elif playerchoice in choiceRT:
+    if RT==" ":
+      RT="O"
+      playerturn=1
+    else:
+      playerturn=2
+
+def bot_find_spots_open():
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global RT
+  global open_spots
+  open_spots=''
+  if LB==" ":
+    open_spots+="1"
+  if MB==" ":
+    open_spots+="2"
+  if RB==" ":
+    open_spots+="3"
+  if LC==" ":
+    open_spots+="4"
+  if MC==" ":
+    open_spots+="5"
+  if RC==" ":
+    open_spots+="6"
+  if LT==" ":
+    open_spots+="7"
+  if MT==" ":
+    open_spots+="8"
+  if RT==" ":
+    open_spots+="9"
+
+def bot_find_corners_open():
+  global LB
+  global LT
+  global RB
+  global RT
+  global open_corners
+  open_corners=''
+  if LB==" ":
+    open_corners+="1"
+  if RB==" ":
+    open_corners+="3"
+  if LT==" ":
+    open_corners+="7"
+  if RT==" ":
+    open_corners+="9"
+
+def bot_find_sides_open():
+  global LC
+  global MB
+  global MT
+  global RC
+  global open_sides
+  open_sides=''
+  if LC==" ":
+    open_sides+="4"
+  if MB==" ":
+    open_sides+="2"
+  if MT==" ":
+    open_corners+="8"
+  if RC==" ":
+    open_corners+="6"
+
+def bot_find_spots_win():
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global open_spots
+  global winning_spots
+  global open_winning_spots
+  winning_spots=''
+  open_winning_spots=''
+  if (LC=="O" and LT=="O") or (MB=="O" and RB=="O") or (MC=="O" and RT=="O"):
+    winning_spots+="1"
+  if (LB=="O" and RB=="O") or (MC=="O" and MT=="O"):
+    winning_spots+="2"
+  if (LB=="O" and MB=="O") or (LT=="O" and MC=="O") or (RC=="O" and RT=="O"):
+    winning_spots+="3"
+  if (LB=="O" and LT=="O") or (MC=="O" and RC=="O"):
+    winning_spots+="4"
+  if (LC=="O" and RC=="O") or (MB=="O" and MT=="O") or (LB=="O" and RT=="O") or (LT=="O" and RB=="O"):
+    winning_spots+="5"
+  if (LC=="O" and MC=="O") or (RB=="O" and RT=="O"):
+    winning_spots+="6"
+  if (LB=="O" and LC=="O") or (MC=="O" and RB=="O") or (MT=="O" and RT=="O"):
+    winning_spots+="7"
+  if (MB=="O" and MC=="O") or (LT=="O" and RT=="O"):
+    winning_spots+="8"
+  if (LB=="O" and MC=="O") or (LT=="O" and MT=="O") or (RB=="O" and RC=="O"):
+    winning_spots+="9"
+  for char in winning_spots:
+    if char in open_spots:
+      open_winning_spots+=char
+
+def bot_find_spots_deny():
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global RT
+  global open_spots
+  global deny_spots
+  global open_deny_spots
+  deny_spots=''
+  open_deny_spots=''
+  if (LC=="X" and LT=="X") or (MB=="X" and RB=="X") or (MC=="X" and RT=="X"):
+    deny_spots+="1"
+  if (LB=="X" and RB=="X") or (MC=="X" and MT=="X"):
+    deny_spots+="2"
+  if (LB=="X" and MB=="X") or (LT=="X" and MC=="X") or (RC=="X" and RT=="X"):
+    deny_spots+="3"
+  if (LB=="X" and LT=="X") or (MC=="X" and RC=="X"):
+    deny_spots+="4"
+  if (LC=="X" and RC=="X") or (MB=="X" and MT=="X") or (LB=="X" and RT=="X") or (LT=="X" and RB=="X"):
+    deny_spots+="5"
+  if (LC=="X" and MC=="X") or (RB=="X" and RT=="X"):
+    deny_spots+="6"
+  if (LB=="X" and LC=="X") or (MC=="X" and RB=="X") or (MT=="X" and RT=="X"):
+    deny_spots+="7"
+  if (MB=="X" and MC=="X") or (LT=="X" and RT=="X"):
+    deny_spots+="8"
+  if (LB=="X" and MC=="X") or (LT=="X" and MT=="X") or (RB=="X" and RC=="X"):
+    deny_spots+="9"
+  for char in deny_spots:
+    if char in open_spots:
+      open_deny_spots+=char
+
+def bot_pick_spot():
+  global d
+  global playerchoice
+  global LB
+  global LC
+  global LT
+  global MB
+  global MC
+  global MT
+  global RB
+  global RC
+  global RT
+  global open_spots
+  global open_corners
+  global open_winning_spots
+  global open_deny_spots
+  if d==1:
+    wait(1+random.random()+random.random())
+    playerchoice=random.choice(open_spots+open_winning_spots)
+  elif d==2:
+    wait(random.random()+random.random())
+    playerchoice=random.choice((open_corners*2)+open_deny_spots+(open_winning_spots*3)+open_spots)
+  elif d==3:
+    wait(random.random())
+    if open_winning_spots=='' and open_deny_spots=='':
+      playerchoice=random.choice((open_corners*8)+open_spots)
+    elif open_winning_spots=='':
+      playerchoice=random.choice(open_deny_spots)
+    else:
+      playerchoice=random.choice(open_winning_spots)
+  elif d==4:
+    if open_winning_spots=='' and open_deny_spots=='':
+      playerchoice=random.choice((open_corners*8)+open_spots)
+    elif open_winning_spots=='':
+      playerchoice=random.choice(open_deny_spots)
+    else:
+      playerchoice=random.choice(open_winning_spots)
+    if len(open_corners)==3 and MC==" ":
+      playerchoice="5"
+
+while passed==0:
+  clear()
+  print_playercount()
+  print_board()
+  choose_playercount()
+passed=0
+if p==1:
+  while passed==0:
+    clear()
+    print_bot_difficulty()
+    print_board()
+    bot_difficulty()
+    if d==4:
+      print("Warning! Impossible difficulty. You will not win.")
+while finished==0:
+  clear()
+  print(playercount)
+  print_help()
+  print_board()
+  if (LB=="X" and MB=="X" and RB=="X") or (LC=="X" and MC=="X" and RC=="X") or (LT=="X" and MT=="X" and RT=="X") or (LB=="X" and LC=="X" and LT=="X") or (MB=="X" and MC=="X" and MT=="X") or (RB=="X" and RC=="X" and RT=="X") or (LB=="X" and MC=="X" and RT=="X") or (LT=="X" and MC=="X" and RB=="X"):
+    winner="Player 1"
+    break
+  if (LB=="O" and MB=="O" and RB=="O") or (LC=="O" and MC=="O" and RC=="O") or (LT=="O" and MT=="O" and RT=="O") or (LB=="O" and LC=="O" and LT=="O") or (MB=="O" and MC=="O" and MT=="O") or (RB=="O" and RC=="O" and RT=="O") or (LB=="O" and MC=="O" and RT=="O") or (LT=="O" and MC=="O" and RB=="O"):
+    winner="Player 2"
+    break
+  boardstate=[LT,MT,RT,LC,MC,RC,LB,MB,RB]
+  try:
+    boardstate.index(" ")
+  except:
+    finished=1
+    break
+  if playerturn==1:
+    if p==2:
+      print("Player 1's turn")
+    else:
+      print("Its your turn")
+    playerchoice=input()
+    player1_turn()
+  elif playerturn==2:
+    if p==2:
+      print("Player 2's turn")
+      playerchoice=input()
+      player2_turn()
+    else:
+      print("Its the computer's turn")
+      bot_find_spots_open()
+      bot_find_corners_open()
+      bot_find_spots_win()
+      bot_find_spots_deny()
+      bot_pick_spot()
+      player2_turn()
+
+try:
+  print(winner,"wins!")
+except:
+  print("Draw!")
