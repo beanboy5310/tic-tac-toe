@@ -416,10 +416,10 @@ def bot_pick_spot():
   global open_deny_spots
   if d==1:
     wait(1+random.random()+random.random())
-    playerchoice=random.choice(open_spots+open_winning_spots)
+    playerchoice=random.choice(open_spots+(open_winning_spots*2)+open_deny_spots)
   elif d==2:
     wait(random.random()+random.random())
-    playerchoice=random.choice((open_corners*2)+open_deny_spots+(open_winning_spots*3)+open_spots)
+    playerchoice=random.choice(open_corners+(open_deny_spots*2)+(open_winning_spots*5)+open_spots)
   elif d==3:
     wait(random.random())
     if open_winning_spots=='' and open_deny_spots=='':
@@ -491,6 +491,9 @@ while finished==0:
       player2_turn()
 
 try:
-  print(winner,"wins!")
+  if d==4:
+    print("I told you so.")
+  else:
+    print(winner,"wins!")
 except:
   print("Draw!")
